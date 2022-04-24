@@ -1,0 +1,18 @@
+{
+  "name": "bughunters",
+  "version": "1.0.0",
+  "description": "A Hippie Garden Themed Space Invaders Clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/zenlex/bughunters"
+  },
+  "author": "zenlex",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "eslint": "^8.14.0"
+  }
+}
