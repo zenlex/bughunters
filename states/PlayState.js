@@ -5,17 +5,16 @@ import GameOverState from './GameOverState.js';
 
 export default class PlayState{
   constructor(config, level){
-    console.log(config);
-    this.level = level;
     this.config = config;
-        
+    this.level = level;
 
     //adjust speeds based on level
     const levelMultiplier = 1 + this.level * this.config.levelDifficultyMultiplier;
     this.shipSpeed = this.config.shipSpeed;
-    this.bugInitialVelocity = this.config.invaderInitialVelocity * levelMultiplier;
+    this.bugInitialVelocity = this.config.bugInitialVelocity * levelMultiplier;
     this.bombRate = this.config.bombRate * levelMultiplier;
     this.bombMinVelocity = this.config.bombMinVelocity * levelMultiplier;
+    this.bugVelocity = this.config.bugInitialVelocity;
 
     //store refs for game entities
     this.bombs = [];
@@ -33,14 +32,13 @@ export default class PlayState{
     const bugs = [];
     for(let rank = 0; rank < ranks; ++rank){
       for(let file = 0; file < files; ++file){
-        this.bugs.push(new Bug((this.config.gameWidth / 2) + ((files / 2 - file) * 200 / files), game.gameBounds.top + rank * 20, rank, file, 'Bug'));
+        bugs.push(new Bug((this.config.gameWidth / 2) + ((files / 2 - file) * 300 / files), game.gameBounds.top + 20 + rank * 40, rank, file,'Bug'));
       }
     }
-    this.bugCurrentVelocity = this.invaderInitialVelocity;
-    this.bugVelocity = {x: -this.invaderVelocity, y: 0};
+    this.bugCurrentVelocity = {x: -this.bugVelocity, y: 0};
     this.bugNextVelocity = null;
     this.bugsAreDropping = false;
-    console.log(bugs); 
+    this.bugCurrentDropDistance = 0;
     this.bugs = bugs; 
   }
 
@@ -67,12 +65,12 @@ export default class PlayState{
     let hitLeft = false, hitRight = false, hitBottom = false;
     for(let i = 0; i < this.bugs.length; ++i){
       const bug = this.bugs[i];
-      const newx = bug.x + this.bugVelocity.x * dt;
-      const newy = bug.y + this.bugVelocity.y * dt;
-      if(hitLeft === false && newx < game.gameBounds.left){
+      const newx = bug.x + this.bugCurrentVelocity.x * dt;
+      const newy = bug.y + this.bugCurrentVelocity.y * dt;
+      if(hitLeft === false && newx - (bug.width / 2)< game.gameBounds.left){
         hitLeft = true;
       }
-      else if(hitRight === false && newx > game.gameBounds.right) {
+      else if(hitRight === false && newx + (bug.width / 2) > game.gameBounds.right) {
         hitRight = true;
       }
       else if(hitBottom === false && newy > game.gameBounds.bottom) {
@@ -87,28 +85,28 @@ export default class PlayState{
     
     //update bug velocities
     if (this.bugsAreDropping) {
-      this.bugCurrentDropDistance += this.bugVelocity.y * dt;
+      this.bugCurrentDropDistance += this.bugCurrentVelocity.y * dt;
       if(this.bugCurrentDropDistance > this.config.bugDropDistance){
         this.bugsAreDropping = false;
-        this.bugVelocity = this.bugNextVelocity;
+        this.bugCurrentVelocity = this.bugNextVelocity;
         this.bugCurrentDropDistance = 0;
       }
     }
     
     //if hit left edge - move down, right
     if(hitLeft) {
-      this.bugCurrentVelocity += this.config.bugAcceleration;
-      this.bugVelocity = {x: 0, y: this.bugCurrentVelocity};
+      this.bugVelocity += this.config.bugAcceleration;
+      this.bugCurrentVelocity = {x: 0, y: this.bugVelocity};
       this.bugsAreDropping = true;
-      this.bugNextVelocity = {x: this.bugCurrentVelocity, y: 0};
+      this.bugNextVelocity = {x: this.bugVelocity, y: 0};
     }
 
     //if hit right edge - move down, left
     if(hitRight) {
-      this.bugCurrentVelocity += this.config.bugAcceleration;
-      this.bugVelocity = {x: 0, y: this.bugCurrentVelocity};
+      this.bugVelocity += this.config.bugAcceleration;
+      this.bugCurrentVelocity={x: 0, y: this.bugVelocity}; 
       this.bugsAreDropping = true;
-      this.bugNextVelocity = {x: -this.bugCurrentVelocity, y: 0};
+      this.bugNextVelocity = {x: -this.bugVelocity, y: 0};
     }
 
     if(hitBottom){

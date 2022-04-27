@@ -16,10 +16,8 @@ export default class LevelIntroState{
     ctx.fillText(`Ready in ${this.countdownmessage}`, game.width / 2, game.height / 2 );
   }
 
-  update(game, time){
+  update(game, dt){
     if(!this.countdown) this.countdown = 3;
-    if(!this.initTime) this.initTime = time;
-    const dt = time - this.initTime;
     this.countdown -=dt ;
     if(this.countdown < 2) this.countdownmessage = 2;
 

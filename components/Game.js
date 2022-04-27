@@ -70,8 +70,8 @@ export default class Game{
 
   animate(time){
     if(this.lastTime){
-      this.timeDelta = time - this.lastTime;
-    }
+      this.timeDelta = (time - this.lastTime) / 1000;
+    } else this.timeDelta = 0;
     this.lastTime = time;
     const currentState = this.currentState();
     if(currentState){
@@ -86,8 +86,10 @@ export default class Game{
   }
   
   init(canvas){
-    this.width = canvas.width,
-    this.height = canvas.height,
+    this.width = canvas.width;
+    this.height = canvas.height;
+    this.config.gameWidth = canvas.width;
+    this.config.gameHeight = canvas.height;
     this.gameBounds = {
       top: 0,
       right: this.width,
