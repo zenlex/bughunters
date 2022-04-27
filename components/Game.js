@@ -1,24 +1,58 @@
-
+import WelcomeState from '../states/WelcomeState.js';
 export default class Game{
-  constructor(canvas, score = 0, lives = 3, speed = 1, worldWidth = 640, worldHeight = 680 ){
-    this.score = score;
-    this.lives = lives;
-    this.speed = speed;
-    this.worldWidth = worldWidth;
-    this.worldHeight = worldHeight;
+  constructor(canvas){
+    this.score = 0;
+    this.MAX_LIVES = 3;
+    this.lives = this.MAX_LIVES;
+    this.level = 1;
+    this.fps = 30; //game loop speed
     this.canvas = canvas;
+    this.width = canvas.width;
+    this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
     this.lastTime;
     this.timeDelta = 0;
     this.bugs = [];
     this.missiles = [];
     this.GUTTER_HEIGHT = 50;
-    this.leftPressed = false;
-    this.rightPressed = false;
+    this.stateStack = [];
+    this.pressedKeys = {};
+    this.ship = {pos:{x:canvas.width / 2, y: this.GUTTER_HEIGHT}};
     this.animate = this.animate.bind(this);
-    this.drawShip = this.drawShip.bind(this);
-    this.keyPressHandler = this.keyPressHandler.bind(this);
     // this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
+  }
+
+  currentState(){
+    return this.stateStack.length > 0 ? this.stateStack[this.stateStack.length - 1] : null;
+  }
+
+  moveToState(state){
+    if(this.currentState()){
+      if(this.currentState().leave){
+        this.currentState.leave(this);
+      }
+      this.stateStack.pop();
+    }
+
+    if(state.enter){
+      state.enter(this);
+    }
+
+    this.stateStack.push(state);
+  }
+  
+  pushState(state){
+    if(state.enter){
+      state.enter(this);
+    }
+    this.stateStack.push(state);
+  }
+
+  popState(state){
+    if(state.leave){
+      state.leave(this);
+    }
+    this.stateStack.pop();
   }
 
   drawBugs(){
@@ -52,14 +86,22 @@ export default class Game{
   animate(time){
     if(this.lastTime){
       this.timeDelta = time - this.lastTime;
-      this.lastTime = time;
     }
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawBugs();
-    this.drawShip();
-    this.drawMissiles();
-    this.drawScore();
-    this.drawLives();
+    this.lastTime = time;
+    const currentState = this.currentState();
+    if(currentState){
+      if(currentState.update){
+        currentState.update(this, this.timeDelta);
+      }
+      if(currentState.draw){
+        currentState.draw(this, this.ctx);
+      }
+    }
+    // this.drawBugs();
+    // this.drawShip();
+    // this.drawMissiles();
+    // this.drawScore();
+    // this.drawLives();
     window.requestAnimationFrame(this.animate);
   }
   
@@ -68,41 +110,27 @@ export default class Game{
     this.lives = 3;
     this.lastTime = undefined;
     this.timeDelta = 0;
-    this.clearListeners();
+    // this.clearListeners();
   }
 
-  keyPressHandler(e){
-    console.log('KEY PRESSED');
-    switch(e.code){
-    case 'ArrowLeft':
-      e.preventDefault();
-      this.leftPressed = true;
-      this.rightPressed = false;
-      console.log({left: this.leftPressed, right: this.rightPressed});
-      break;
-    case 'ArrowRight':
-      e.preventDefault();
-      this.rightPressed = true;
-      this.leftPressed = false;
-      console.log({left: this.leftPressed, right: this.rightPressed});
-      break;
+  keyDown(game, keycode){
+    this.pressedKeys[keycode] = true;
+    if(this.currentState() && this.currentState().keyDown){
+      this.currentState().keyDown(game, keycode);
     }
   }
 
-  activateListeners(){
-    document.addEventListener('keydown', this.keyPressHandler);
-    document.addEventListener('mousemove', this.mouseMoveHandler);
-  }
-
-  clearListeners(){
-    document.removeEventListener('keypress', this.keyPressHandler);
-    document.removeEventListener('mousemove', this.mouseMoveHandler);
+  keyUp(game, keycode){
+    delete this.pressedKeys[keycode];
+    if(this.currentState() && this.currentState().keyUp){
+      this.currentState().keyUp(game, keycode);
+    }
   }
 
   start(){
-    console.log('start game');
+    // this.activateListeners();
+    this.moveToState(new WelcomeState());
     this.init();
-    this.activateListeners();
     this.animate();
   }
 
