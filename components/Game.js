@@ -1,25 +1,48 @@
 import WelcomeState from '../states/WelcomeState.js';
 export default class Game{
-  constructor(canvas){
-    this.score = 0;
-    this.MAX_LIVES = 3;
-    this.lives = this.MAX_LIVES;
-    this.level = 1;
-    this.fps = 30; //game loop speed
-    this.canvas = canvas;
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.ctx = canvas.getContext('2d');
+  constructor(canvas, config){
+    //status variables
+    this.ctx = canvas.getContext('2d'),
+    this.canvas = canvas,
+    this.width = canvas.width,
+    this.height = canvas.height,
+    this.gameBounds = {
+      top: 0,
+      right: this.width,
+      bottom: this.height,
+      left: 0
+    };
     this.lastTime;
     this.timeDelta = 0;
-    this.bugs = [];
-    this.missiles = [];
-    this.GUTTER_HEIGHT = 50;
-    this.stateStack = [];
     this.pressedKeys = {};
-    this.ship = {pos:{x:canvas.width / 2, y: this.GUTTER_HEIGHT}};
+    this.stateStack = [];
+    
+    // game settings
+    this.config = config || {
+      bomRate: 0.05,
+      bombMinVelocity: 50,
+      bombMaxVelocity: 50,
+      invaderInitialVelocity: 25,
+      invaderAcceleration: 0,
+      invaderDropDistance: 20,
+      missileVelocity: 120,
+      missileMaxFireRate: 2,
+      score: 0,
+      lives: 3,
+      level: 1,
+      fps : 50, //game loop speed
+      invaderRanks: 5,
+      invaderFiles: 10,
+      shipSpeed: 120,
+      levelDifficultyMultiplier: 0.2,
+      pointsPerInvader: 5,
+      gameWidth: this.width,
+      gameHeight: this.height,
+      gameBounds: this.gameBounds
+    };
+
+    //function binds
     this.animate = this.animate.bind(this);
-    // this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
   }
 
   currentState(){
@@ -55,34 +78,6 @@ export default class Game{
     this.stateStack.pop();
   }
 
-  drawBugs(){
-    // console.log('draw bugs');
-  }
-
-  drawShip(){
-    this.ctx.beginPath();
-    this.ctx.rect(this.ship.pos.x, this.ship.pos.y, this.ship.width, this.ship.height);
-    this.ctx.fillStyle = 'red';
-    this.ctx.fill();
-    this.ctx.closePath();
-    console.log(this.leftPressed);
-    if(this.leftPressed) console.log('moving left');
-    if(this.rightPressed) console.log('moving right');
-    console.log('new ship position: ', JSON.stringify(this.ship));
-  }
-
-  drawMissiles(){
-    // console.log('draw missiles');
-  }
-  
-  drawScore(){
-    // console.log('draw score');
-  }
-
-  drawLives(){
-    // console.log('draw lives');
-  }
-
   animate(time){
     if(this.lastTime){
       this.timeDelta = time - this.lastTime;
@@ -97,11 +92,6 @@ export default class Game{
         currentState.draw(this, this.ctx);
       }
     }
-    // this.drawBugs();
-    // this.drawShip();
-    // this.drawMissiles();
-    // this.drawScore();
-    // this.drawLives();
     window.requestAnimationFrame(this.animate);
   }
   
