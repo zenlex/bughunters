@@ -1,44 +1,35 @@
 import WelcomeState from '../states/WelcomeState.js';
 export default class Game{
   constructor(canvas, config){
-    //status variables
+    //state variables
+    this.canvas = canvas;
     this.ctx = canvas.getContext('2d'),
-    this.canvas = canvas,
-    this.width = canvas.width,
-    this.height = canvas.height,
-    this.gameBounds = {
-      top: 0,
-      right: this.width,
-      bottom: this.height,
-      left: 0
-    };
     this.lastTime;
     this.timeDelta = 0;
     this.pressedKeys = {};
     this.stateStack = [];
+    this.level = 1;
     
     // game settings
     this.config = config || {
       bomRate: 0.05,
       bombMinVelocity: 50,
       bombMaxVelocity: 50,
-      invaderInitialVelocity: 25,
-      invaderAcceleration: 0,
-      invaderDropDistance: 20,
+      bugInitialVelocity: 25,
+      bugAcceleration: 0,
+      bugDropDistance: 20,
       missileVelocity: 120,
       missileMaxFireRate: 2,
       score: 0,
       lives: 3,
-      level: 1,
       fps : 50, //game loop speed
-      invaderRanks: 5,
-      invaderFiles: 10,
+      bugRanks: 5,
+      bugFiles: 10,
       shipSpeed: 120,
       levelDifficultyMultiplier: 0.2,
-      pointsPerInvader: 5,
+      pointsPerBug: 5,
       gameWidth: this.width,
       gameHeight: this.height,
-      gameBounds: this.gameBounds
     };
 
     //function binds
@@ -50,10 +41,8 @@ export default class Game{
   }
 
   moveToState(state){
-    if(this.currentState()){
-      if(this.currentState().leave){
-        this.currentState.leave(this);
-      }
+    if(this.currentState() && this.currentState.leave){
+      this.currentState().leave(this);
       this.stateStack.pop();
     }
 
@@ -61,6 +50,7 @@ export default class Game{
       state.enter(this);
     }
 
+    this.stateStack.pop();
     this.stateStack.push(state);
   }
   
@@ -95,7 +85,15 @@ export default class Game{
     window.requestAnimationFrame(this.animate);
   }
   
-  init(){
+  init(canvas){
+    this.width = canvas.width,
+    this.height = canvas.height,
+    this.gameBounds = {
+      top: 0,
+      right: this.width,
+      bottom: this.height,
+      left: 0
+    };
     this.score = 0;
     this.lives = 3;
     this.lastTime = undefined;
@@ -119,31 +117,9 @@ export default class Game{
 
   start(){
     // this.activateListeners();
+    this.init(this.canvas);
     this.moveToState(new WelcomeState());
-    this.init();
     this.animate();
   }
 
-  spawn(type, x = 0, y = 0, ref){
-    switch(type){
-    case 'bug':
-      this.bugs.push(ref);
-      break;
-    case 'ship':
-      console.log('ship ref: ', ref);
-      this.ship = ref;
-      break;
-    default:
-      throw new Error(`Unhandled Spawn Type: ${type}`);
-    }
-    console.log(`Spawn ${type}, pos: ${{x,y}}`);
-  }
-
-  destroy(element){
-    console.log(`destroy element ${element}`);
-  }
-
-  collisionDetection(elem1, elem2, ...rest){
-    console.log(`collision detection ${elem1}, ${elem2}, ${rest}`);
-  }
 }

@@ -21,12 +21,11 @@ export default class LevelIntroState{
     if(!this.initTime) this.initTime = time;
     const dt = time - this.initTime;
     this.countdown -=dt ;
-    console.log({dt, countdown: this.countdown});
     if(this.countdown < 2) this.countdownmessage = 2;
 
     if(this.countdown < 1) this.countdownmessage = 1;
 
-    if(this.countdown <= 0) game.moveToState(new PlayState(game, this.level));
+    if(this.countdown <= 0) game.moveToState(new PlayState(game.config, this.level));
 
   }
 }
