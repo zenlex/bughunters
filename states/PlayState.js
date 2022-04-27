@@ -73,7 +73,7 @@ export default class PlayState{
       else if(hitRight === false && newx + (bug.width / 2) > game.gameBounds.right) {
         hitRight = true;
       }
-      else if(hitBottom === false && newy > game.gameBounds.bottom) {
+      else if(hitBottom === false && newy > game.gameBounds.bottom - bug.height) {
         hitBottom = true;
       }
 
@@ -110,7 +110,7 @@ export default class PlayState{
     }
 
     if(hitBottom){
-      this.lives = 0;
+      game.lives = 0;
     }
 
     //TODO - implement bomb movement

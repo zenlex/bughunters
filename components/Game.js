@@ -15,7 +15,7 @@ export default class Game{
       bomRate: 0.05,
       bombMinVelocity: 50,
       bombMaxVelocity: 50,
-      bugInitialVelocity: 25,
+      bugInitialVelocity: 100,
       bugAcceleration: 0,
       bugDropDistance: 20,
       missileVelocity: 120,
