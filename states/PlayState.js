@@ -19,10 +19,10 @@ export default class PlayState{
     //store refs for game entities
     this.bugs = [];
     this.ship = null;
-
+    this.loadSprites();
     //sprites
   }
-
+  //TODO: fix this path prefixing for github pages or deploy elsewhere - might be time to play with parcel
   loadSprites(){
     if(!this.shipSprite){
       this.shipSprite = new Image();
