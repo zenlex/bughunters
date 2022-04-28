@@ -2,7 +2,9 @@ import Game from './components/Game.js';
 import AudioURL from 'url:./birdsong.mp3';
 import bugSpriteImg from './img/sprite-bug.png';
 import shipSpriteImg from './img/sprite-butterfly.png';
-//TODO reafctor/optimize asset loading
+
+//TODO reafctor/optimize asset loading and handle mime type issues with deployment bundle
+
 const bugSprite = new Image();
 bugSprite.src = bugSpriteImg;
 
