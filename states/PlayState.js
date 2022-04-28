@@ -17,13 +17,16 @@ export default class PlayState{
     this.bugVelocity = this.config.bugInitialVelocity;
 
     //store refs for game entities
-    this.bombs = [];
-    this.missiles = [];
     this.bugs = [];
     this.ship = null;
 
+    //sprites
+    this.shipSprite = new Image();
+    this.shipSprite.src='/img/sprite-butterfly.png';
+    this.bugSprite = new Image();
+    this.bugSprite.src = '/img/sprite-bug.png';
   }
-
+  
   enter(game){
     //init the bugs
     this.ship = new Ship(this.config.gameWidth / 2, game.gameBounds.bottom);
@@ -32,7 +35,7 @@ export default class PlayState{
     const bugs = [];
     for(let rank = 0; rank < ranks; ++rank){
       for(let file = 0; file < files; ++file){
-        bugs.push(new Bug((this.config.gameWidth / 2) + ((files / 2 - file) * 300 / files), game.gameBounds.top + 20 + rank * 40, rank, file,'Bug'));
+        bugs.push(new Bug((this.config.gameWidth / 2) + ((files / 2 - file) * 500 / files), game.gameBounds.top + 20 + rank * 40, rank, file,'Bug'));
       }
     }
     this.bugCurrentVelocity = {x: -this.bugVelocity, y: 0};
@@ -145,17 +148,16 @@ export default class PlayState{
     
     //draw ship
     ctx.fillStyle = '#999999';
-    ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
+    ctx.drawImage(this.shipSprite, this.ship.x - (this.ship.width / 2), this.ship.y - this.ship.height, this.ship.width, this.ship.height);
 
     //draw bugs
-    ctx.fillStyle = '#006600';
     for(let i = 0; i < this.bugs.length; ++i){
       const bug = this.bugs[i];
-      ctx.fillRect(bug.x - bug.width / 2, bug.y - bug.height / 2, bug.width, bug.height);
+      ctx.drawImage(this.bugSprite, bug.x - bug.width / 2, bug.y - bug.height / 2, bug.width, bug.height);
     }
-    //draw bumbs
-
     //draw missiles
+
+    //draw bombs
   }
   
 }

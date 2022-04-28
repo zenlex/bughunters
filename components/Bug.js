@@ -5,7 +5,7 @@ export default class Bug{
     this.rank = rank;
     this.file = file;
     this.type = type;
-    this.width = 18;
-    this.height = 14;
+    this.width = 32;
+    this.height = 24;
   }
 }

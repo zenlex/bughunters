@@ -1,0 +1,17 @@
+before submit (minimum):
+- collision detection between bugs / ship
+- replace rects for ship and bugs with sprites
+- bg image for page
+
+w/David:
+- implement missile spawn/movement
+- collision detection between missles/bugs
+
+bonus time w/David:
+- implement bomb movement (bugs in front rank can drop bombs)
+- collision detection between bombs / ship
+
+- sprite animation for bug movement
+- sprite animation for ship(butterflies)
+- sprite animation for missles(caterpillars)
+- sprite animation for bug destruction - should morph

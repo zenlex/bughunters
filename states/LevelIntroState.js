@@ -7,13 +7,13 @@ export default class LevelIntroState{
 
   draw(game, ctx){
     ctx.clearRect(0, 0, game.width, game.height);
-    ctx.font = '36px Arial';
+    ctx.font = '48px Brush Script MT';
     ctx.fillStyle = '#000000';
     ctx.textBaseline = 'center';
     ctx.textAlign = 'center';
-    ctx.fillText(`Level ${this.level}`, game.width / 2, game.height / 2 - 50);
-    ctx.font = '24px Arial';
-    ctx.fillText(`Ready in ${this.countdownmessage}`, game.width / 2, game.height / 2 );
+    ctx.fillText(`Level ${this.level}`, game.width / 2, game.height / 2 - 200);
+    ctx.font = '36px Brush Script MT';
+    ctx.fillText(`Ready in ${this.countdownmessage}`, game.width / 2, game.height / 2 - 150 );
   }
 
   update(game, dt){

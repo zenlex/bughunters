@@ -1,8 +1,8 @@
 export default class Ship{
-  constructor(x = 0, y = 0){
+  constructor(x = 0, y = 40){
     this.x = x;
     this.y = y;
-    this.width = 20;
-    this.height = 16;
+    this.width = 60;
+    this.height = 40;
   }
 }
