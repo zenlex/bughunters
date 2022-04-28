@@ -1,5 +1,8 @@
 import LevelIntroState from './LevelIntroState.js';
 export default class GameOverState{
+  constructor(sprites){
+    this.sprites = sprites;
+  }
   draw(game, ctx){
     const canvas = game.canvas;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -18,7 +21,7 @@ export default class GameOverState{
       game.lives = 3;
       game.score = 0;
       game.level = 1;
-      game.moveToState(new LevelIntroState(game.level));
+      game.moveToState(new LevelIntroState(game.level, this.sprites));
     }
   }
 }

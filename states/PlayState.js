@@ -5,7 +5,6 @@ import GameOverState from './GameOverState.js';
 
 export default class PlayState{
   constructor(config, level, sprites){
-    console.log('sprites: ', sprites);
     this.config = config;
     this.level = level;
 
@@ -20,24 +19,10 @@ export default class PlayState{
     //store refs for game entities
     this.bugs = [];
     this.ship = null;
-    
-    //sprites
-    this.shipSprite = sprites.shipSprite; 
-    this.bugSprite = sprites.bugSprite; 
+    this.sprites = sprites;
+    console.log('Playstate sprites:', this.sprites);
   }
-  
-  // //TODO: optimize this...
-  // loadSprites(){
-  //   if(!this.shipSprite){
-  //     this.shipSprite = new Image();
-  //     this.shipSprite.src='img/sprite-butterfly.png';
-  //   }
-  //   if(!this.bugSprite){
-  //     this.bugSprite = new Image();
-  //     this.bugSprite.src = 'img/sprite-bug.png';
-  //   }
-  // }
-  
+
   enter(game){
     //init the bugs
     this.ship = new Ship(this.config.gameWidth / 2, game.gameBounds.bottom);
@@ -159,12 +144,12 @@ export default class PlayState{
     
     //draw ship
     ctx.fillStyle = '#999999';
-    ctx.drawImage(this.shipSprite, this.ship.x - (this.ship.width / 2), this.ship.y - this.ship.height, this.ship.width, this.ship.height);
+    ctx.drawImage(this.sprites.shipSprite, this.ship.x - (this.ship.width / 2), this.ship.y - this.ship.height, this.ship.width, this.ship.height);
 
     //draw bugs
     for(let i = 0; i < this.bugs.length; ++i){
       const bug = this.bugs[i];
-      ctx.drawImage(this.bugSprite, bug.x - bug.width / 2, bug.y - bug.height / 2, bug.width, bug.height);
+      ctx.drawImage(this.sprites.bugSprite, bug.x - bug.width / 2, bug.y - bug.height / 2, bug.width, bug.height);
     }
     //draw missiles
 

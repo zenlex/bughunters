@@ -1,6 +1,7 @@
 import WelcomeState from '../states/WelcomeState.js';
 export default class Game{
-  constructor(canvas, config){
+  constructor(canvas, config, sprites){
+    console.log('game arg sprites', sprites);
     //state variables
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d'),
@@ -9,7 +10,8 @@ export default class Game{
     this.pressedKeys = {};
     this.stateStack = [];
     this.level = 1;
-    
+    this.sprites = sprites;
+    console.log('game sprites:', this.sprites);
     // game settings
     this.config = config || {
       bomRate: 0.05,
@@ -120,7 +122,7 @@ export default class Game{
   start(){
     // this.activateListeners();
     this.init(this.canvas);
-    this.moveToState(new WelcomeState());
+    this.moveToState(new WelcomeState(this.sprites));
     this.animate();
   }
 

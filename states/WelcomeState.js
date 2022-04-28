@@ -1,6 +1,11 @@
 import LevelIntroState from './LevelIntroState.js';
 
 export default class WelcomeState{
+  constructor(sprites){
+    this.sprites = sprites;
+    console.log('WelcomState Sprites:', this.sprites);
+  }
+
   draw(game, ctx){
     const canvas = game.canvas;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -17,7 +22,7 @@ export default class WelcomeState{
   keyDown(game, keycode){
     if(keycode === 'Space'){
       game.pressedKeys[keycode] = true;
-      game.moveToState(new LevelIntroState(game.level));
+      game.moveToState(new LevelIntroState(game.level, this.sprites));
     }
   }
 }

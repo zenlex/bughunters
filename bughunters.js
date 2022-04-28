@@ -1,9 +1,17 @@
 import Game from './components/Game.js';
 import AudioURL from 'url:./birdsong.mp3';
+import bugSpriteImg from './img/sprite-bug.png';
+import shipSpriteImg from './img/sprite-butterfly.png';
+//TODO reafctor/optimize asset loading
+const bugSprite = new Image();
+bugSprite.src = bugSpriteImg;
 
+const shipSprite = new Image();
+shipSprite.src = shipSpriteImg;
 const canvas = document.querySelector('#gamecanvas');
 
-const game = new Game(canvas);
+const sprites = {bugSprite, shipSprite};
+const game = new Game(canvas, null, sprites);
 
 game.start();
 

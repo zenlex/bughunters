@@ -1,14 +1,11 @@
 import PlayState from './PlayState.js';
 export default class LevelIntroState{
-  constructor(level){
+  constructor(level, sprites){
     this.level = level;
     this.countdownmessage = 3;
   
-    const shipSprite = new Image();
-    shipSprite.src='img/sprite-butterfly.png';
-    const bugSprite = new Image();
-    bugSprite.src = 'img/sprite-bug.png';
-    this.sprites = {shipSprite, bugSprite};
+    this.sprites = sprites;
+    console.log('introstate sprites', this.sprites);
   }
 
   draw(game, ctx){
