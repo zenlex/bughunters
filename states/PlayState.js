@@ -26,11 +26,11 @@ export default class PlayState{
   loadSprites(){
     if(!this.shipSprite){
       this.shipSprite = new Image();
-      this.shipSprite.src='/img/sprite-butterfly.png';
+      this.shipSprite.src='img/sprite-butterfly.png';
     }
     if(!this.bugSprite){
       this.bugSprite = new Image();
-      this.bugSprite.src = '/img/sprite-bug.png';
+      this.bugSprite.src = 'img/sprite-bug.png';
     }
   }
   
