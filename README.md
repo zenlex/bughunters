@@ -12,8 +12,9 @@ Move around your butterfly and fire caterpillars at the invading bugs to turn th
 
 ### Install
 -Clone/Fork repo or download `index.html`, `bughunters.js`, `style.css` and place them all in a folder. 
--Load index.html in browser or run with a live server. 
-
+-Run `npm install` to install dependencies
+-Run `npm build` to create distribution bundle if needed
+-Run `npm start` to launch local server (Parcel)
 ### Usage
 Use `<-` and `->` to move butterfly left/right and `spacebar` to fire caterpillars
 
