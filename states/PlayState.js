@@ -4,7 +4,8 @@ import LevelIntroState from './LevelIntroState.js';
 import GameOverState from './GameOverState.js';
 
 export default class PlayState{
-  constructor(config, level){
+  constructor(config, level, sprites){
+    console.log('sprites: ', sprites);
     this.config = config;
     this.level = level;
 
@@ -21,26 +22,23 @@ export default class PlayState{
     this.ship = null;
     
     //sprites
-    this.shipSprite = new Image();
-    this.shipSprite.src='img/sprite-butterfly.png';
-    this.bugSprite = new Image();
-    this.bugSprite.src = 'img/sprite-bug.png';
+    this.shipSprite = sprites.shipSprite; 
+    this.bugSprite = sprites.bugSprite; 
   }
   
-  //TODO: optimize this...
-  loadSprites(){
-    if(!this.shipSprite){
-      this.shipSprite = new Image();
-      this.shipSprite.src='img/sprite-butterfly.png';
-    }
-    if(!this.bugSprite){
-      this.bugSprite = new Image();
-      this.bugSprite.src = 'img/sprite-bug.png';
-    }
-  }
+  // //TODO: optimize this...
+  // loadSprites(){
+  //   if(!this.shipSprite){
+  //     this.shipSprite = new Image();
+  //     this.shipSprite.src='img/sprite-butterfly.png';
+  //   }
+  //   if(!this.bugSprite){
+  //     this.bugSprite = new Image();
+  //     this.bugSprite.src = 'img/sprite-bug.png';
+  //   }
+  // }
   
   enter(game){
-    this.loadSprites();
     //init the bugs
     this.ship = new Ship(this.config.gameWidth / 2, game.gameBounds.bottom);
     const ranks = this.config.bugRanks;

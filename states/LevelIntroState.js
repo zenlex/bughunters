@@ -3,6 +3,12 @@ export default class LevelIntroState{
   constructor(level){
     this.level = level;
     this.countdownmessage = 3;
+  
+    const shipSprite = new Image();
+    shipSprite.src='img/sprite-butterfly.png';
+    const bugSprite = new Image();
+    bugSprite.src = 'img/sprite-bug.png';
+    this.sprites = {shipSprite, bugSprite};
   }
 
   draw(game, ctx){
@@ -23,7 +29,7 @@ export default class LevelIntroState{
 
     if(this.countdown < 1) this.countdownmessage = 1;
 
-    if(this.countdown <= 0) game.moveToState(new PlayState(game.config, this.level));
+    if(this.countdown <= 0) game.moveToState(new PlayState(game.config, this.level, this.sprites));
 
   }
 }

@@ -1,5 +1,5 @@
 import Game from './components/Game.js';
-const AudioURL =require('url:./birdsong.mp3');
+import AudioURL from 'url:./birdsong.mp3';
 
 const canvas = document.querySelector('#gamecanvas');
 
