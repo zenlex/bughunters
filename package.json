@@ -4,7 +4,13 @@
   "description": "A Hippie Garden Themed Space Invaders Clone",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll --verbose",
+    "start": "parcel ./index.html",
+    "prebuild-dev": "shx rm -rf dist/*",
+    "build-dev": "parcel build ./index.html --no-minify --public-url ./bughunters/",
+    "prebuild": "shx rm -rf dist/*",
+    "build": "parcel build ./index.html --public-url ./bughunters/",
+    "push-gh-pages": "push-dir --dir=dist --branch=gh-pages --cleanup --verbose"
   },
   "repository": {
     "type": "git",
@@ -13,6 +19,8 @@
   "author": "zenlex",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "eslint": "^8.14.0"
+    "eslint": "^8.14.0",
+    "push-dir": "^0.4.1",
+    "shx": "^0.3.2"
   }
 }

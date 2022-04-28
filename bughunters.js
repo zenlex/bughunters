@@ -1,4 +1,5 @@
 import Game from './components/Game.js';
+import AudioURL from './birdsong.mp3';
 
 const canvas = document.querySelector('#gamecanvas');
 
@@ -20,7 +21,7 @@ window.addEventListener('keyup', (e) => {
   game.keyUp(game, code);
 });
 
-const audio = new Audio('birdsong.mp3');
+const audio = new Audio(AudioURL);
 let birdsPlaying = false;
 document.onclick = function() {
   birdsPlaying ? audio.pause() : audio.play();

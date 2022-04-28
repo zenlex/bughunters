@@ -21,8 +21,13 @@ export default class PlayState{
     this.ship = null;
     
     //sprites
+    this.shipSprite = new Image();
+    this.shipSprite.src='img/sprite-butterfly.png';
+    this.bugSprite = new Image();
+    this.bugSprite.src = 'img/sprite-bug.png';
   }
-  //TODO: fix this path prefixing for github pages or deploy elsewhere - might be time to play with parcel
+  
+  //TODO: optimize this...
   loadSprites(){
     if(!this.shipSprite){
       this.shipSprite = new Image();
