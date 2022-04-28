@@ -2,14 +2,14 @@
   "name": "bughunters",
   "version": "1.0.0",
   "description": "A Hippie Garden Themed Space Invaders Clone",
-  "main": "index.js",
+  "publicUrl": "/bughunters",
   "scripts": {
     "test": "jest --watchAll --verbose",
     "start": "parcel ./index.html",
     "prebuild-dev": "shx rm -rf dist/*",
     "build-dev": "parcel build ./index.html --no-minify --public-url ./bughunters/",
     "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build ./index.html --public-url ./bughunters/",
+    "build": "parcel build ./index.html",
     "push-gh-pages": "push-dir --dir=dist --branch=gh-pages --cleanup --verbose"
   },
   "repository": {
@@ -19,7 +19,10 @@
   "author": "zenlex",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
+    "cssnano": "^5.1.7",
     "eslint": "^8.14.0",
+    "parcel": "^2.5.0",
+    "postcss": "^8.4.12",
     "push-dir": "^0.4.1",
     "shx": "^0.3.2"
   }
