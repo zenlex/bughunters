@@ -8,7 +8,7 @@ export default class LevelIntroState{
   draw(game, ctx){
     ctx.clearRect(0, 0, game.width, game.height);
     ctx.font = '48px Brush Script MT';
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = 'brown';
     ctx.textBaseline = 'center';
     ctx.textAlign = 'center';
     ctx.fillText(`Level ${this.level}`, game.width / 2, game.height / 2 - 200);

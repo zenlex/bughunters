@@ -4,7 +4,7 @@ export default class GameOverState{
     const canvas = game.canvas;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font ='48px Brush Script MT';
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = 'brown';
     ctx.textBaseline = 'center';
     ctx.textAlign = 'center';
     ctx.fillText('GAME OVER', game.width / 2, game.height / 2 - 200);

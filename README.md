@@ -6,6 +6,8 @@
 
 A Hippie, Garden Themed Space Invaders Clone
 
+*Currently a work in progress*
+
 Move around your butterfly and fire caterpillars at the invading bugs to turn them into plants! 
 
 ### Install

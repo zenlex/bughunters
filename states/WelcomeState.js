@@ -5,7 +5,7 @@ export default class WelcomeState{
     const canvas = game.canvas;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font ='64px Brush Script MT';
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = 'brown';
     ctx.textBaseline = 'center';
     ctx.textAlign = 'center';
     ctx.fillText('Bug Hunters', game.width / 2, game.height / 2 - 200);
