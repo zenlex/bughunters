@@ -11,7 +11,7 @@ A Hippie, Garden Themed Space Invaders Clone
 Move around your butterfly and fire caterpillars at the invading bugs to turn them into plants! 
 
 ### Install
--Clone/Fork repo or download `index.html`, `bughunters.js`, `style.css` and place them all in a folder. 
+-Clone/Fork repo 
 -Run `npm install` to install dependencies
 -Run `npm build` to create distribution bundle if needed
 -Run `npm start` to launch local server (Parcel)
