@@ -13,7 +13,7 @@ const shipSprite = new Image();
 shipSprite.src = shipSpriteImg;
 
 const missileSprite = new Image();
-shipSprite.src = missileSpriteImg;
+missileSprite.src = missileSpriteImg;
 
 const sprites = { bugSprite, shipSprite, missileSprite };
 
