@@ -1,5 +1,6 @@
 import Bug from '../components/Bug.js';
 import Ship from '../components/Ship.js';
+import Missile from '../components/Missile.js';
 import LevelIntroState from './LevelIntroState.js';
 import GameOverState from './GameOverState.js';
 
@@ -18,6 +19,7 @@ export default class PlayState {
 
     //store refs for game entities
     this.bugs = [];
+    this.missiles = [];
     this.ship = null;
     this.sprites = sprites;
   }
@@ -50,6 +52,8 @@ export default class PlayState {
     }
     if (game.pressedKeys['Space']) {
       this.fireMissile();
+      delete game.pressedKeys['Space'];
+      //debounce this
     }
     //ship boundary check
     if (this.ship.x < game.gameBounds.left) {
@@ -111,6 +115,18 @@ export default class PlayState {
       game.lives = 0;
     }
 
+    //move missiles
+    for (let i = 0; i < this.missiles.length; ++i) {
+      const missile = this.missiles[i];
+      missile.y -= this.config.missileVelocity * dt;
+      if (missile.y < 0) {
+        // consider collecting indices to remove
+        this.missiles.splice(i--, 1);
+      }
+    }
+
+
+
     //TODO - implement missile movement
     //TODO - collision detection between missles/bugs
     //TODO - collision detection between bugs / ship
@@ -134,8 +150,11 @@ export default class PlayState {
   }
 
   fireMissile() {
-    //TODO - implement fireMissile;
-    console.log('Pew Pew------>');
+    if (this.missiles.length < this.config.missileMaxFireRate) {
+      console.log('Pew Pew------>');
+      this.missiles.push(new Missile(this.ship.x, this.ship.y - this.ship.height, this.config.missileVelocity));
+      console.log('missile array:', this.missiles);
+    }
   }
 
   draw(game, ctx) {
@@ -151,9 +170,13 @@ export default class PlayState {
       const bug = this.bugs[i];
       ctx.drawImage(this.sprites.bugSprite, bug.x - bug.width / 2, bug.y - bug.height / 2, bug.width, bug.height);
     }
-    //draw missiles
+    // draw missiles
+    for (let i = 0; i < this.missiles.length; ++i) {
+      const missile = this.missiles[i];
+      ctx.drawImage(this.sprites.missileSprite, missile.x - missile.width / 2, missile.y - missile.height / 2);
+    }
 
-    //draw bombs
+    //TODO draw bombs
   }
 
 }
